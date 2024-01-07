@@ -58,3 +58,22 @@ https://www.postgresqltutorial.com/postgresql-getting-started/postgresql-sample-
    * Получаем сообщение от дебага, что все проверки пройдены
 
 Далее пробуем запускать `dbt run`
+
+### Система "источников"
+1. Создаем в папке `models` файл с названием `sources.yml`. Пишем туда конфиг с названиями таблиц
+2. в папке с моделями создаем новую папку, например `my_models` в ней файл `actor.sql`. В последний файл пишем SQL-jinja код
+3. Выполняем команду в терминале `dbt compile`
+4. Получаем предупреждение, что у нас нет ни одной модели: 
+   ```
+    [WARNING]: Configuration paths exist in your dbt_project.yml file which do not apply to any 
+  resources.
+  There are 1 unused configuration paths:
+  - models.training.example
+  ```
+
+
+## Модели и полезные части кода
+```python
+{{ config(materialized='table') }}
+```
+Заставляет dbt сделать из результата скрипта материализованную таблицу с данными
